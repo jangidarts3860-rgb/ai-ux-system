@@ -1,33 +1,36 @@
-# Systematic Debugging Principles
+# Components — Complete Specification & Database
 
-Use this file as a reference for investigating bugs, test failures, or unexpected UI behaviors.
+> Deep component specs with exact tokens, states, responsive rules, and Indian market patterns.
+> Version: 3.0 | Updated: 2026-07-12
 
-## The Iron Law of Debugging
-Seek the root cause before attempting fixes. Symptom fixes often create new bugs.
+## Component Contract (Every Component Must Have)
 
-## Recommended Debugging Phases
+| Field | Required | Description |
+|-------|----------|-------------|
+| **Name** | ✅ | Unique identifier (kebab-case) |
+| **Purpose** | ✅ | One-sentence: what it does |
+| **Anatomy** | ✅ | Visual parts with token refs |
+| **Variants** | ✅ | Type × Size × State matrix |
+| **Tokens** | ✅ | All visual properties → design tokens |
+| **States** | ✅ | All 8 states with exact token changes |
+| **Auto Layout** | ✅ | Direction, gap, padding, sizing |
+| **Content Limits** | ✅ | Max chars, truncation rules, localization |
+| **Responsive** | ✅ | Breakpoint behavior |
+| **Accessibility** | ✅ | Role, labels, focus, touch target, ARIA |
+| **Interaction** | ✅ | Hover, press, focus, loading, keyboard |
+| **Owner** | ✅ | Design / Dev owner |
+| **Code Counterpart** | ✅ | React/Vue/Flutter component name |
 
-### Phase 1: Root Cause Investigation
-Before proposing a fix, consider:
-1. **Read Error Messages Carefully**: Read stack traces completely, noting file paths and error codes.
-2. **Reproduce Consistently**: Identify the exact steps to trigger the bug. If it's not reproducible, gather more data.
-3. **Check Recent Changes**: Git diffs, new dependencies, and config changes are prime suspects.
-4. **Gather Evidence in Multi-Component Systems**: Add diagnostic instrumentation at component boundaries.
-5. **Trace Data Flow**: Trace backward from where the bad value appears to where it originated.
+## Breakpoints
 
-### Phase 2: Pattern Analysis
-Find the pattern before fixing:
-1. Find working examples in the same codebase.
-2. Compare the broken code against reference implementations.
-3. Identify differences, however small.
-4. Understand dependencies, environmental assumptions, and configuration.
+| Name | Width | Columns | Gutter | Margin | Use Case |
+|------|-------|---------|--------|--------|----------|
+| Mobile | 320-479px | 4 | 16px | 16px | Default (India mobile-first) |
+| Mobile Large | 480-639px | 4 | 16px | 20px | Large phones |
+| Tablet | 640-1023px | 8 | 24px | 24px | Tablets, foldables |
+| Desktop | 1024-1439px | 12 | 24px | 32px | Laptops |
+| Desktop Large | 1440px+ | 12 | 32px | 48px | Monitors |
 
-### Phase 3: Hypothesis and Testing
-1. Form a single, specific hypothesis ("I think X is the root cause because Y").
-2. Make the smallest possible change to test the hypothesis (one variable at a time).
-3. Verify if the change worked before continuing.
+## Final Rule
 
-### Phase 4: Implementation
-1. **Create a Failing Test Case** (if possible) before implementing the fix.
-2. Implement a single fix addressing the root cause. Avoid bundled refactoring.
-3. Verify the fix against the test case and ensure no side effects occurred.
+Components should be reusable, accessible, and system-aware.

@@ -1,43 +1,34 @@
-# Design Tokens — Complete Reference
+# Systematic Debugging Principles
 
-> Single source of truth for all design decisions. Used by Figma Variables, CSS, JSON, React Native.
-> Version: 3.0 | Updated: 2026-07-12
+Use this file as a reference for investigating bugs, test failures, or unexpected UI behaviors.
 
-## Token Architecture — 3-Layer System
+## The Iron Law of Debugging
+Seek the root cause before attempting fixes. Symptom fixes often create new bugs.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  LAYER 3: COMPONENT TOKENS (Specific)                       │
-│  button-primary-bg, input-border-focus, card-shadow-hover   │
-│  ↑ aliases ↑                                                │
-│  LAYER 2: SEMANTIC TOKENS (Purpose-driven)                  │
-│  color-action-primary, color-surface-card, space-4, radius-md │
-│  ↑ aliases ↑                                                │
-│  LAYER 1: PRIMITIVE TOKENS (Raw values)                     │
-│  color-brand-500, color-neutral-900, space-16, radius-8     │
-└─────────────────────────────────────────────────────────────┘
+## Recommended Debugging Phases
 
-RULE: Components ONLY use Layer 3. Layer 3 aliases Layer 2. Layer 2 aliases Layer 1.
-```
+### Phase 1: Root Cause Investigation
+Before proposing a fix, consider:
+1. **Read Error Messages Carefully**: Read stack traces completely, noting file paths and error codes.
+2. **Reproduce Consistently**: Identify the exact steps to trigger the bug. If it's not reproducible, gather more data.
+3. **Check Recent Changes**: Git diffs, new dependencies, and config changes are prime suspects.
+4. **Gather Evidence**: Trace the broken flow end-to-end.
 
-## Spacing Tokens (8pt Grid — Strict)
+### Phase 2: Pattern Analysis
+1. Find working examples in the same codebase.
+2. Compare the broken code against reference implementations.
+3. Identify differences, however small.
 
-| Token | Value | Rem | Usage |
-|-------|-------|-----|-------|
-| `space-1` | `4px` | `0.25rem` | Micro: icon+label gap |
-| `space-2` | `8px` | `0.5rem` | Small: list item gap, icon padding |
-| `space-3` | `12px` | `0.75rem` | Compact padding |
-| `space-4` | `16px` | `1rem` | **Medium: component padding** |
-| `space-6` | `24px` | `1.5rem` | **Large: card padding** |
-| `space-8` | `32px` | `2rem` | **XL: section gap** |
+### Phase 3: Hypothesis and Testing
+1. Form a single, specific hypothesis.
+2. Make the smallest possible change to test the hypothesis.
+3. Verify if the change worked before continuing.
 
-## Border Radius Tokens
+### Phase 4: Implementation
+1. Create a failing test case if possible.
+2. Implement a single fix addressing the root cause.
+3. Verify the fix against the test case and confirm no side effects.
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `radius-none` | `0px` | Sharp corners, dividers |
-| `radius-sm` | `4px` | Badges, tags, small chips |
-| `radius-md` | `8px` | **Buttons, inputs, small cards** |
-| `radius-lg` | `12px` | **Cards, dropdowns, popovers** |
-| `radius-xl` | `16px` | **Modals, drawers, bottom sheets** |
-| `radius-full` | `9999px` | Pills, avatars, FABs, tags |
+## Final Rule
+
+Diagnose the root cause before patching.
